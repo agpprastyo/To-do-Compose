@@ -1,16 +1,8 @@
 package com.agprastyo.todocompose.data
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.TypeConverters
-import androidx.room.Update
-import com.agprastyo.todocompose.data.models.Priority
+import androidx.room.*
 import com.agprastyo.todocompose.data.models.ToDoTask
 import kotlinx.coroutines.flow.Flow
-
 
 @Dao
 interface ToDoDao {
@@ -18,9 +10,8 @@ interface ToDoDao {
     @Query("SELECT * FROM todo_table ORDER BY id ASC")
     fun getAllTask(): Flow<List<ToDoTask>>
 
-
     @Query("SELECT * FROM todo_table WHERE id = :taskId")
-    fun getSelectedTask(taskId: ToDoTask): Flow<ToDoTask>
+    fun getSelectedTask(taskId: Int): Flow<ToDoTask>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTask(toDoTask: ToDoTask)
