@@ -3,6 +3,7 @@ package com.agprastyo.todocompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
@@ -10,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.agprastyo.todocompose.navigation.SetupNavigation
 import com.agprastyo.todocompose.ui.theme.ToDoComposeTheme
+import com.agprastyo.todocompose.ui.viewmodel.SharedViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
+    private val sharedViewModel: SharedViewModel by viewModels()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +38,10 @@ class MainActivity : ComponentActivity() {
                     onDispose {}
                 }
                 navController = rememberNavController()
-                SetupNavigation(navController = navController)
+                SetupNavigation(
+                    navController = navController,
+                    sharedViewModel = sharedViewModel
+                )
             }
         }
     }
