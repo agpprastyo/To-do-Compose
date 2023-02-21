@@ -1,6 +1,5 @@
 package com.agprastyo.todocompose.ui.screens.list
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -27,11 +26,10 @@ fun ListScreen(
     sharedViewModel: SharedViewModel
 ) {
     LaunchedEffect(key1 = true) {
-
         sharedViewModel.getAllTask()
     }
 
-    val allTaks = sharedViewModel.allTask.collectAsState()
+    val allTasks by sharedViewModel.allTask.collectAsState()
 
     val searchAppBarState: SearchAppBarState
             by sharedViewModel.searchAppBarState
@@ -46,7 +44,10 @@ fun ListScreen(
             )
         },
         content = {
-            ListContent()
+            ListContent(
+                tasks = allTasks,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
         },
         floatingActionButton = {
             ListFab(
